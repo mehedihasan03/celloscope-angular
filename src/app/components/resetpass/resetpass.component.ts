@@ -1,55 +1,60 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SignupService } from 'src/app/signup.service';
-
-import { User } from './registration.model';
+import { User } from '../registration/registration.model';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  selector: 'app-resetpass',
+  templateUrl: './resetpass.component.html',
+  styleUrls: ['./resetpass.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class ResetpassComponent implements OnInit {
 
   user = new User()
-  formGroup: FormGroup;
+  formGroup: FormGroup
   submitted = false;
+  isSave: boolean = true
 
-  constructor(private toastr: ToastrService, private fb: FormBuilder, private router: Router,
+  constructor(private fb: FormBuilder, private router: Router,private toastr: ToastrService,
     private http: HttpClient, private signupService: SignupService) {
     this.formGroup = this.fb.group(
       {
-        userId: ['', [Validators.required]],
-        mobile: ['', [Validators.required]],
         password: ['', [Validators.required]]
       }
     )
   }
-
   ngOnInit(): void {
+    if (history.state.isSave != undefined) {
+      this.user = history.state.forgotUser
+      this.isSave = history.state.isSave
+      console.log(history.state.forgotUser);
+    }
   }
 
   get f() {
     return this.formGroup.controls;
   }
 
-  saveUser() {
+  resetPassword(){
+    console.log(this.user);
+    
     this.submitted = true;
     if (this.formGroup.valid) {
-      this.signupService.signUp(this.formGroup.value)
+      this.signupService.resetPass(JSON.stringify(this.user))
         .subscribe(res => {
           this.toastr.success(res.message);
           console.log(res.message);
           this.user = new User();
-          this.router.navigate(['registration']);
+          this.router.navigate(['login']);
         }, err => {
           console.log(err.error.message);
           this.toastr.error(err.error.message);
-          this.router.navigate(['registration']);
+          this.router.navigate(['resetPass']);
         })
     }
+
   }
 }

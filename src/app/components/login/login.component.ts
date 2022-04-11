@@ -36,23 +36,21 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
-
     this.submitted = true;
-    this.loginService.login(this.formGroup.value)
-      .subscribe(res => {
-        this.toastr.success(res.message);
-        this.storageService.saveLoginInfo(res.data);
-        console.log(res.message);
-        
-        this.router.navigate(['']);
-      }, err => {
-        console.log(err.error.message);
-        
-        this.toastr.error(err.error.message);
-        this.router.navigate(['login']);
-      })
+    if (this.formGroup.valid) {
+      this.loginService.login(this.formGroup.value)
+        .subscribe(res => {
+          this.toastr.success(res.message);
+          this.storageService.saveLoginInfo(res.data);
+          console.log(res.message);
 
+          this.router.navigate(['']);
+        }, err => {
+          console.log(err.error.message);
+
+          this.toastr.error(err.error.message);
+          this.router.navigate(['login']);
+        })
+    }
   }
-
 }
