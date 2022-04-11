@@ -1,5 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService, ToastContainerModule } from 'ngx-toastr';
+import { LoginService } from 'src/app/login.service';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +13,46 @@ import { ToastrService, ToastContainerModule } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private toastr: ToastrService) { }
+  formGroup: FormGroup;
+  submitted = false;
 
-  ngOnInit(): void {
+  constructor(private toastr: ToastrService, private fb: FormBuilder, private router: Router,
+    private http: HttpClient, private storageService: StorageService, private loginService: LoginService) {
+    this.formGroup = this.fb.group(
+      {
+        userId: ['', [Validators.required]],
+        password: ['', [Validators.required]]
+      }
+    )
   }
 
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+  ngOnInit(): void {
+    var isLoggedIn = this.storageService.isLoggedIn();
+    if (isLoggedIn) this.router.navigate(['']);
+  }
+
+  get f() {
+    return this.formGroup.controls;
+  }
+
+  login() {
+
+
+    this.submitted = true;
+    this.loginService.login(this.formGroup.value)
+      .subscribe(res => {
+        this.toastr.success(res.message);
+        this.storageService.saveLoginInfo(res.data);
+        console.log(res.message);
+        
+        this.router.navigate(['']);
+      }, err => {
+        console.log(err.error.message);
+        
+        this.toastr.error(err.error.message);
+        this.router.navigate(['login']);
+      })
+
   }
 
 }
