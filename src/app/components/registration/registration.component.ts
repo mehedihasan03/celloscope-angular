@@ -42,11 +42,9 @@ export class RegistrationComponent implements OnInit {
       this.signupService.signUp(this.formGroup.value)
         .subscribe(res => {
           this.toastr.success(res.message);
-          console.log(res.message);
           this.user = new User();
           this.router.navigate(['registration']);
         }, err => {
-          console.log(err.error.message);
           this.toastr.error(err.error.message);
           this.router.navigate(['registration']);
         })

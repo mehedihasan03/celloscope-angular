@@ -18,6 +18,6 @@ export class SignupService {
   }
   resetPass(data: any): Observable<any>{
     const headers = { 'content-type': 'application/json' };
-    return this.http.post("http://localhost:8787/api/v1/user/update", headers);
+    return this.http.post("http://localhost:8787/api/v1/user/reset", data, {headers: headers});
   }
 }

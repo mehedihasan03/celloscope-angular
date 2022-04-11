@@ -42,12 +42,8 @@ export class LoginComponent implements OnInit {
         .subscribe(res => {
           this.toastr.success(res.message);
           this.storageService.saveLoginInfo(res.data);
-          console.log(res.message);
-
           this.router.navigate(['']);
         }, err => {
-          console.log(err.error.message);
-
           this.toastr.error(err.error.message);
           this.router.navigate(['login']);
         })

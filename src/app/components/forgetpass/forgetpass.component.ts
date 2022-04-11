@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SignupService } from 'src/app/signup.service';
 import { User } from '../registration/registration.model';
 
@@ -16,7 +17,7 @@ export class ForgetpassComponent implements OnInit {
   formGroup: FormGroup
   submitted = false;
 
-  constructor(private fb: FormBuilder, private router: Router,
+  constructor(private toastr: ToastrService, private fb: FormBuilder, private router: Router,
     private http: HttpClient, private signupService: SignupService) {
     this.formGroup = this.fb.group(
       {
@@ -38,14 +39,14 @@ export class ForgetpassComponent implements OnInit {
     if (this.formGroup.valid) {
       this.signupService.matchUser(this.formGroup.value)
         .subscribe(res => {
+          this.user.id = res.data.id
           this.user.userId = res.data.userId
           this.user.password = res.data.password
           this.user.mobile = res.data.mobile
-          console.log(this.user);
+          this.toastr.success(res.message);
           this.router.navigate(['resetPass'], { state: { forgotUser: this.user, isSave: false } })
-
         }, err => {
-          console.log(err.error.message);
+          this.toastr.error(err.error.message);
           this.router.navigate(['forgetPassword']);
         })
     }

@@ -29,9 +29,8 @@ export class ResetpassComponent implements OnInit {
   ngOnInit(): void {
     if (history.state.isSave != undefined) {
       this.user = history.state.forgotUser
-      this.isSave = history.state.isSave
-      console.log(history.state.forgotUser);
-    }
+      this.isSave = history.state.isSave;
+    }    
   }
 
   get f() {
@@ -39,22 +38,17 @@ export class ResetpassComponent implements OnInit {
   }
 
   resetPassword(){
-    console.log(this.user);
-    
+    this.user.password = this.formGroup.get("password")?.value;
     this.submitted = true;
     if (this.formGroup.valid) {
       this.signupService.resetPass(JSON.stringify(this.user))
         .subscribe(res => {
           this.toastr.success(res.message);
-          console.log(res.message);
-          this.user = new User();
           this.router.navigate(['login']);
         }, err => {
-          console.log(err.error.message);
           this.toastr.error(err.error.message);
           this.router.navigate(['resetPass']);
         })
     }
-
   }
 }
