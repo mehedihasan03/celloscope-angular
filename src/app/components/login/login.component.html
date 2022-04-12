@@ -10,7 +10,7 @@
         </div>
         <div class="form-outline form-white mb-4">
             <div *ngIf="submitted && f['userId'].errors">
-                <div class="error text-warning">
+                <div class="error text-danger">
                     Enter Your UserId.
                 </div>
             </div>
@@ -23,12 +23,13 @@
         </div>
         <div class="form-outline form-white mb-4">
             <div *ngIf="submitted && f['password'].errors">
-                <div class="error text-warning">
+                <div class="error text-danger">
                     Enter Your password.
                 </div>
             </div>
         </div>
         <button type="submit" class="btn mt-3">Login</button>
     </form>
-    <div class="text-center fs-6"> <a href="forgetPassword">Forget password?</a> or <a href="registration">create User</a> </div>
+    <div class="text-center fs-6"> <a href="forgetPassword">Forget password?</a> or <a href="registration">create
+            User</a> </div>
 </div>

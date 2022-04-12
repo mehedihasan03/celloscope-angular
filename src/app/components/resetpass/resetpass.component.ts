@@ -18,7 +18,7 @@ export class ResetpassComponent implements OnInit {
   submitted = false;
   isSave: boolean = true
 
-  constructor(private fb: FormBuilder, private router: Router,private toastr: ToastrService,
+  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService,
     private http: HttpClient, private signupService: SignupService) {
     this.formGroup = this.fb.group(
       {
@@ -30,14 +30,14 @@ export class ResetpassComponent implements OnInit {
     if (history.state.isSave != undefined) {
       this.user = history.state.forgotUser
       this.isSave = history.state.isSave;
-    }    
+    }
   }
 
   get f() {
     return this.formGroup.controls;
   }
 
-  resetPassword(){
+  resetPassword() {
     this.user.password = this.formGroup.get("password")?.value;
     this.submitted = true;
     if (this.formGroup.valid) {

@@ -11,12 +11,14 @@ import { ResetpassComponent } from './components/resetpass/resetpass.component';
 const routes: Routes = [
 
 
-  {path: "login", component: LoginComponent}, {path: "registration", component: RegistrationComponent},
-  {path: "forgetPassword", component: ForgetpassComponent}, {path: "resetPass", component: ResetpassComponent},
+  { path: "login", component: LoginComponent }, { path: "registration", component: RegistrationComponent },
+  { path: "forgetPassword", component: ForgetpassComponent }, { path: "resetPass", component: ResetpassComponent },
 
-  {path: "", component: HomeComponent, canActivateChild: [AuthGuard],  children:[
-    {path: "", component: DashboardComponent},
-  ]}
+  {
+    path: "", component: HomeComponent, canActivateChild: [AuthGuard], children: [
+      { path: "", component: DashboardComponent },
+    ]
+  }
 ];
 
 @NgModule({
