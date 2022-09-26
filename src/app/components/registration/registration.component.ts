@@ -43,6 +43,7 @@ export class RegistrationComponent implements OnInit {
         .subscribe(res => {
           this.toastr.success(res.message);
           this.user = new User();
+          this.formGroup.reset();
           this.router.navigate(['registration']);
         }, err => {
           this.toastr.error(err.error.message);
