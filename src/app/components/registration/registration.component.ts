@@ -22,8 +22,8 @@ export class RegistrationComponent implements OnInit {
     private http: HttpClient, private signupService: SignupService) {
     this.formGroup = this.fb.group(
       {
-        userId: ['', [Validators.required]],
-        mobile: ['', [Validators.required]],
+        userId: ['', [Validators.required, Validators.minLength(3)]],
+        mobile: ['', [Validators.required, Validators.max(9999999999), Validators.min(1000000000)]],
         password: ['', [Validators.required]]
       }
     )
@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit {
           this.toastr.success(res.message);
           this.user = new User();
           this.formGroup.reset();
-          this.router.navigate(['registration']);
+          this.router.navigate(['login']);
         }, err => {
           this.toastr.error(err.error.message);
           this.router.navigate(['registration']);

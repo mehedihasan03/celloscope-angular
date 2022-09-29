@@ -13,7 +13,7 @@
         <div class="form-outline form-white mb-4">
             <div *ngIf="submitted && f['userId'].errors">
                 <div class="error text-danger">
-                    Enter an UserId.
+                    Enter an valid UserId.
                 </div>
             </div>
         </div>
@@ -32,13 +32,13 @@
         </div>
         <div class="form-field d-flex align-items-center">
             <span class="fas fa-key"></span>
-            <input type="text" name="mobile" id="mobile" placeholder="Mobile No" formControlName="mobile" required>
+            <input type="number" name="mobile" id="mobile" placeholder="Mobile No" formControlName="mobile" required>
 
         </div>
         <div class="form-outline form-white mb-4">
             <div *ngIf="submitted && f['mobile'].errors">
                 <div class="error text-danger">
-                    Enter Your mobile.
+                    Enter a valid mobile.
                 </div>
             </div>
         </div>
